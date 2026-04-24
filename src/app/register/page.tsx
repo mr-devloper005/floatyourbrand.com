@@ -1,106 +1,224 @@
-import Link from 'next/link'
-import { Bookmark, Building2, FileText, Image as ImageIcon, Sparkles } from 'lucide-react'
-import { NavbarShell } from '@/components/shared/navbar-shell'
-import { Footer } from '@/components/shared/footer'
-import { getFactoryState } from '@/design/factory/get-factory-state'
-import { getProductKind } from '@/design/factory/get-product-kind'
-import { REGISTER_PAGE_OVERRIDE_ENABLED, RegisterPageOverride } from '@/overrides/register-page'
+'use client'
 
-function getRegisterConfig(kind: ReturnType<typeof getProductKind>) {
-  if (kind === 'directory') {
-    return {
-      shell: 'bg-[#f8fbff] text-slate-950',
-      panel: 'border border-slate-200 bg-white',
-      side: 'border border-slate-200 bg-slate-50',
-      muted: 'text-slate-600',
-      action: 'bg-slate-950 text-white hover:bg-slate-800',
-      icon: Building2,
-      title: 'Create a business-ready account',
-      body: 'List services, manage locations, and activate trust signals with a proper directory workflow.',
-    }
-  }
-  if (kind === 'editorial') {
-    return {
-      shell: 'bg-[#fbf6ee] text-[#241711]',
-      panel: 'border border-[#dcc8b7] bg-[#fffdfa]',
-      side: 'border border-[#e6d6c8] bg-[#fff4e8]',
-      muted: 'text-[#6e5547]',
-      action: 'bg-[#241711] text-[#fff1e2] hover:bg-[#3a241b]',
-      icon: FileText,
-      title: 'Start your contributor workspace',
-      body: 'Create a profile for essays, issue drafts, editorial review, and publication scheduling.',
-    }
-  }
-  if (kind === 'visual') {
-    return {
-      shell: 'bg-[#07101f] text-white',
-      panel: 'border border-white/10 bg-white/6',
-      side: 'border border-white/10 bg-white/5',
-      muted: 'text-slate-300',
-      action: 'bg-[#8df0c8] text-[#07111f] hover:bg-[#77dfb8]',
-      icon: ImageIcon,
-      title: 'Set up your creator profile',
-      body: 'Launch a visual-first account with gallery publishing, identity surfaces, and profile-led discovery.',
-    }
-  }
-  return {
-    shell: 'bg-[#f7f1ea] text-[#261811]',
-    panel: 'border border-[#ddcdbd] bg-[#fffaf4]',
-    side: 'border border-[#e8dbce] bg-[#f3e8db]',
-    muted: 'text-[#71574a]',
-    action: 'bg-[#5b2b3b] text-[#fff0f5] hover:bg-[#74364b]',
-    icon: Bookmark,
-    title: 'Create a curator account',
-    body: 'Build shelves, save references, and connect collections to your profile without a generic feed setup.',
-  }
+import { useMemo, useState, type FormEvent } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { Eye, EyeOff, Loader2, Mail, User, UserPlus } from 'lucide-react'
+import { AuthShell } from '@/components/shared/auth-shell'
+import { useAuth } from '@/lib/auth-context'
+
+function scorePassword(pw: string) {
+  let score = 0
+  if (pw.length >= 8) score += 1
+  if (/[A-Z]/.test(pw)) score += 1
+  if (/[0-9]/.test(pw)) score += 1
+  if (/[^A-Za-z0-9]/.test(pw)) score += 1
+  return score
 }
 
+const STRENGTH_LABEL = ['Too short', 'Weak', 'Okay', 'Good', 'Strong']
+const STRENGTH_COLOR = [
+  'bg-zinc-200',
+  'bg-rose-500',
+  'bg-amber-500',
+  'bg-yellow-500',
+  'bg-emerald-500',
+]
+
 export default function RegisterPage() {
-  if (REGISTER_PAGE_OVERRIDE_ENABLED) {
-    return <RegisterPageOverride />
+  const router = useRouter()
+  const { signup, isLoading } = useAuth()
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [agree, setAgree] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [submitting, setSubmitting] = useState(false)
+
+  const strength = useMemo(() => scorePassword(password), [password])
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setError(null)
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      setError('Please fill in your name, email and a password.')
+      return
+    }
+    if (password.length < 8) {
+      setError('Use at least 8 characters for your password.')
+      return
+    }
+    if (!agree) {
+      setError('Please accept the terms to create your account.')
+      return
+    }
+    setSubmitting(true)
+    try {
+      await signup(name.trim(), email.trim(), password)
+      router.replace('/')
+      router.refresh()
+    } catch {
+      setError('Could not create your account. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
-  const { recipe } = getFactoryState()
-  const productKind = getProductKind(recipe)
-  const config = getRegisterConfig(productKind)
-  const Icon = config.icon
+  const busy = submitting || isLoading
 
   return (
-    <div className={`min-h-screen ${config.shell}`}>
-      <NavbarShell />
-      <main className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <section className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch">
-          <div className={`rounded-[2rem] p-8 ${config.side}`}>
-            <Icon className="h-8 w-8" />
-            <h1 className="mt-5 text-4xl font-semibold tracking-[-0.05em]">{config.title}</h1>
-            <p className={`mt-5 text-sm leading-8 ${config.muted}`}>{config.body}</p>
-            <div className="mt-8 grid gap-4">
-              {['Different onboarding per product family', 'No repeated one-size-fits-all shell', 'Profile, publishing, and discovery aligned'].map((item) => (
-                <div key={item} className="rounded-[1.5rem] border border-current/10 px-4 py-4 text-sm">{item}</div>
-              ))}
-            </div>
-          </div>
+    <AuthShell
+      side="register"
+      eyebrow="Create account"
+      title="Join a calmer corner of the web."
+      description="Save articles, follow writers you trust, and pitch your own stories — all from one minimal account."
+      bullets={[
+        'Save and organise the articles you love',
+        'Follow authors and topics that matter',
+        'Submit pitches and write for the desk',
+      ]}
+      altLink={{
+        helper: 'Already a member?',
+        label: 'Sign in',
+        href: '/login',
+      }}
+    >
+      <form onSubmit={handleSubmit} className="grid gap-4">
+        <label className="grid gap-1.5">
+          <span className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
+            Full name
+          </span>
+          <span className="relative">
+            <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+            <input
+              type="text"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              autoComplete="name"
+              placeholder="Your full name"
+              className="h-11 w-full rounded-sm border border-zinc-300 bg-white pl-9 pr-3 text-sm outline-none transition focus:border-[#ff5500]"
+            />
+          </span>
+        </label>
 
-          <div className={`rounded-[2rem] p-8 ${config.panel}`}>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">Create account</p>
-            <form className="mt-6 grid gap-4">
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Full name" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Email address" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Password" type="password" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="What are you creating or publishing?" />
-              <button type="submit" className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${config.action}`}>Create account</button>
-            </form>
-            <div className={`mt-6 flex items-center justify-between text-sm ${config.muted}`}>
-              <span>Already have an account?</span>
-              <Link href="/login" className="inline-flex items-center gap-2 font-semibold hover:underline">
-                <Sparkles className="h-4 w-4" />
-                Sign in
-              </Link>
-            </div>
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </div>
+        <label className="grid gap-1.5">
+          <span className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
+            Email
+          </span>
+          <span className="relative">
+            <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
+              placeholder="you@example.com"
+              className="h-11 w-full rounded-sm border border-zinc-300 bg-white pl-9 pr-3 text-sm outline-none transition focus:border-[#ff5500]"
+            />
+          </span>
+        </label>
+
+        <label className="grid gap-1.5">
+          <span className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
+            Password
+          </span>
+          <span className="relative">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="new-password"
+              placeholder="At least 8 characters"
+              className="h-11 w-full rounded-sm border border-zinc-300 bg-white px-3 pr-10 text-sm outline-none transition focus:border-[#ff5500]"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((v) => !v)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-sm p-1.5 text-zinc-500 hover:bg-zinc-100"
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+            </button>
+          </span>
+          <span className="mt-1 grid grid-cols-4 gap-1">
+            {[0, 1, 2, 3].map((i) => (
+              <span
+                key={i}
+                className={`h-1 rounded-full ${
+                  i < strength ? STRENGTH_COLOR[strength] : 'bg-zinc-200'
+                }`}
+              />
+            ))}
+          </span>
+          <span className="text-[11px] text-zinc-500">
+            Strength: {STRENGTH_LABEL[strength]} • mix letters, numbers, and a
+            symbol for best results.
+          </span>
+        </label>
+
+        <label className="flex items-start gap-2 text-sm text-zinc-600">
+          <input
+            type="checkbox"
+            checked={agree}
+            onChange={(e) => setAgree(e.target.checked)}
+            className="mt-1 h-4 w-4 cursor-pointer accent-[#ff5500]"
+          />
+          <span>
+            I agree to the{' '}
+            <Link
+              href="/terms"
+              className="font-medium text-blue-600 hover:underline"
+            >
+              terms of service
+            </Link>{' '}
+            and{' '}
+            <Link
+              href="/privacy"
+              className="font-medium text-blue-600 hover:underline"
+            >
+              privacy policy
+            </Link>
+            .
+          </span>
+        </label>
+
+        {error ? (
+          <p className="rounded-sm border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700">
+            {error}
+          </p>
+        ) : null}
+
+        <button
+          type="submit"
+          disabled={busy}
+          className="inline-flex h-11 items-center justify-center gap-2 rounded-sm bg-[#ff5500] text-sm font-bold uppercase tracking-wide text-white transition hover:bg-[#e64d00] disabled:cursor-not-allowed disabled:opacity-70"
+        >
+          {busy ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <UserPlus className="h-4 w-4" />
+          )}
+          {busy ? 'Creating account…' : 'Create account'}
+        </button>
+
+        <p className="text-center text-sm text-zinc-600">
+          Already have an account?{' '}
+          <Link
+            href="/login"
+            className="font-semibold text-blue-600 hover:underline"
+          >
+            Sign in
+          </Link>
+        </p>
+      </form>
+    </AuthShell>
   )
 }

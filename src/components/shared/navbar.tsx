@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Search, Menu, X, User, FileText, Building2, LayoutGrid, Tag, Image as ImageIcon, ChevronRight, Sparkles, MapPin, Plus } from 'lucide-react'
+import { Search, Menu, X, User, FileText, Building2, LayoutGrid, Tag, Image as ImageIcon, ChevronRight, Sparkles, MapPin, Plus, Globe2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/lib/auth-context'
 import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
@@ -41,12 +41,12 @@ const variantClasses = {
     mobile: 'border-t border-slate-200/70 bg-white/95',
   },
   'editorial-bar': {
-    shell: 'border-b border-[#d7c4b3] bg-[#fff7ee]/90 text-[#2f1d16] backdrop-blur-xl',
-    logo: 'rounded-full border border-[#dbc6b6] bg-white shadow-sm',
-    active: 'bg-[#2f1d16] text-[#fff4e4]',
-    idle: 'text-[#72594a] hover:bg-[#f2e5d4] hover:text-[#2f1d16]',
-    cta: 'rounded-full bg-[#2f1d16] text-[#fff4e4] hover:bg-[#452920]',
-    mobile: 'border-t border-[#dbc6b6] bg-[#fff7ee]',
+    shell: 'border-b border-white/10 bg-zinc-900/90 text-white shadow-[0_1px_0_rgba(0,0,0,0.2)] backdrop-blur-md',
+    logo: 'rounded-lg border border-white/20 bg-white/10',
+    active: 'bg-white text-zinc-900',
+    idle: 'text-zinc-200 hover:bg-white/10 hover:text-white',
+    cta: 'rounded-sm bg-[#ff5500] text-white hover:bg-[#e64d00]',
+    mobile: 'border-t border-white/10 bg-zinc-900',
   },
   'floating-bar': {
     shell: 'border-b border-transparent bg-transparent text-white',
@@ -115,9 +115,13 @@ export function Navbar() {
         <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
           <div className="flex min-w-0 items-center gap-4">
             <Link href="/" className="flex shrink-0 items-center gap-3">
-              <div className={cn('flex h-12 w-12 items-center justify-center overflow-hidden p-1.5', palette.logo)}>
-                <img src="/favicon.png?v=20260401" alt={`${SITE_CONFIG.name} logo`} width="48" height="48" className="h-full w-full object-contain" />
-              </div>
+              <img
+                src="/favicon.png?v=20260424"
+                alt={`${SITE_CONFIG.name} logo`}
+                width={44}
+                height={44}
+                className="h-11 w-11 shrink-0 object-contain"
+              />
               <div className="min-w-0 hidden sm:block">
                 <span className="block truncate text-xl font-semibold">{SITE_CONFIG.name}</span>
                 <span className="block text-[10px] uppercase tracking-[0.24em] opacity-60">{siteContent.navbar.tagline}</span>
@@ -210,27 +214,29 @@ export function Navbar() {
       <nav className={cn('mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8', isFloating ? 'h-24 pt-4' : 'h-20')}>
         <div className="flex min-w-0 flex-1 items-center gap-4 lg:gap-7">
           <Link href="/" className="flex shrink-0 items-center gap-3 whitespace-nowrap pr-2">
-            <div className={cn('flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden p-1.5', style.logo)}>
-              <img src="/favicon.png?v=20260401" alt={`${SITE_CONFIG.name} logo`} width="48" height="48" className="h-full w-full object-contain" />
-            </div>
+            <img
+              src="/favicon.png?v=20260424"
+              alt={`${SITE_CONFIG.name} logo`}
+              width={44}
+              height={44}
+              className="h-11 w-11 shrink-0 object-contain"
+            />
             <div className="min-w-0 hidden sm:block">
-              <span className="block truncate text-xl font-semibold">{SITE_CONFIG.name}</span>
-              <span className="hidden text-[10px] uppercase tracking-[0.28em] opacity-70 sm:block">{siteContent.navbar.tagline}</span>
+              <span className="block truncate text-xl font-semibold text-white">{SITE_CONFIG.name}</span>
+              <span className="hidden text-[10px] uppercase tracking-[0.28em] text-zinc-400 sm:block">{siteContent.navbar.tagline}</span>
             </div>
           </Link>
 
           {isEditorial ? (
-            <div className="hidden min-w-0 flex-1 items-center gap-4 xl:flex">
-              <div className="h-px flex-1 bg-[#d8c8bb]" />
+            <div className="hidden min-w-0 flex-1 items-center justify-center gap-2 xl:flex">
               {primaryNavigation.map((task) => {
                 const isActive = pathname.startsWith(task.route)
                 return (
-                  <Link key={task.key} href={task.route} className={cn('text-sm font-semibold uppercase tracking-[0.18em] transition-colors', isActive ? 'text-[#2f1d16]' : 'text-[#7b6254] hover:text-[#2f1d16]')}>
+                  <Link key={task.key} href={task.route} className={cn('rounded-sm px-3 py-2 text-sm font-semibold uppercase tracking-[0.12em] transition-colors', isActive ? 'bg-white text-zinc-900' : 'text-zinc-200 hover:bg-white/10')}>
                     {task.label}
                   </Link>
                 )
               })}
-              <div className="h-px flex-1 bg-[#d8c8bb]" />
             </div>
           ) : isFloating ? (
             <div className="hidden min-w-0 flex-1 items-center gap-2 xl:flex">
@@ -280,23 +286,39 @@ export function Navbar() {
             </Link>
           ) : null}
 
-          <Button variant="ghost" size="icon" asChild className="hidden rounded-full md:flex">
+          <Button variant="ghost" size="icon" asChild className="hidden text-white hover:bg-white/10 md:flex">
             <Link href="/search">
               <Search className="h-5 w-5" />
               <span className="sr-only">Search</span>
             </Link>
           </Button>
 
+          {isEditorial ? (
+            <button
+              type="button"
+              className="hidden h-8 w-8 min-w-8 items-center justify-center rounded-full text-white/90 transition hover:bg-white/10 sm:inline-flex"
+              title="Region / language"
+              aria-label="Region or language"
+            >
+              <Globe2 className="h-4 w-4" />
+            </button>
+          ) : null}
+
           {isAuthenticated ? (
             <NavbarAuthControls />
           ) : (
             <div className="hidden items-center gap-2 md:flex">
-              <Button variant="ghost" size="sm" asChild className="rounded-full px-4">
-                <Link href="/login">Sign In</Link>
+              <Button variant="ghost" size="sm" asChild className="rounded-full border border-transparent px-4 text-white hover:bg-white/10">
+                <Link href="/login" className="inline-flex items-center gap-1.5">
+                  <User className="h-4 w-4" />
+                  Log in
+                </Link>
               </Button>
-              <Button size="sm" asChild className={style.cta}>
-                <Link href="/register">{isEditorial ? 'Subscribe' : isUtility ? 'Post Now' : 'Get Started'}</Link>
-              </Button>
+              {isEditorial ? null : (
+                <Button size="sm" asChild className={style.cta}>
+                  <Link href="/register">{isUtility ? 'Post Now' : 'Get Started'}</Link>
+                </Button>
+              )}
             </div>
           )}
 
