@@ -474,7 +474,34 @@ function CurationHome({ primaryTask, bookmarkPosts, profilePosts, articlePosts }
 
 export default async function HomePage() {
   if (HOME_PAGE_OVERRIDE_ENABLED) {
-    return <HomePageOverride />
+    const schemaData = [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: SITE_CONFIG.name,
+        url: SITE_CONFIG.baseUrl,
+        logo: `${SITE_CONFIG.baseUrl.replace(/\/$/, '')}${SITE_CONFIG.defaultOgImage}`,
+        sameAs: [],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: SITE_CONFIG.name,
+        url: SITE_CONFIG.baseUrl,
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: `${SITE_CONFIG.baseUrl.replace(/\/$/, '')}/search?q={search_term_string}`,
+          'query-input': 'required name=search_term_string',
+        },
+      },
+    ]
+    return (
+      <div className="min-h-screen bg-background text-foreground">
+        <SchemaJsonLd data={schemaData} />
+        <HomePageOverride />
+        <Footer />
+      </div>
+    )
   }
 
   const enabledTasks = SITE_CONFIG.tasks.filter((task) => task.enabled)

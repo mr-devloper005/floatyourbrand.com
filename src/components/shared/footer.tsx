@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FileText, Building2, LayoutGrid, Tag, Github, Twitter, Linkedin, Image as ImageIcon, User, ArrowRight, Sparkles } from 'lucide-react'
+import { FileText, Building2, LayoutGrid, Tag, Github, Twitter, Linkedin, Facebook, Image as ImageIcon, User, ArrowRight, Sparkles } from 'lucide-react'
 import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
 import { siteContent } from '@/config/site.content'
 import { getFactoryState } from '@/design/factory/get-factory-state'
@@ -87,9 +87,13 @@ export function Footer() {
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr_1fr]">
             <div className="rounded-[2rem] border border-white/10 bg-white/5 p-7">
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/12 bg-white/8 p-1.5">
-                  <img src="/favicon.png?v=20260401" alt={`${SITE_CONFIG.name} logo`} width="48" height="48" className="h-full w-full object-contain" />
-                </div>
+                <img
+                  src="/favicon.png?v=20260424"
+                  alt={`${SITE_CONFIG.name} logo`}
+                  width={48}
+                  height={48}
+                  className="h-12 w-12 object-contain"
+                />
                 <div>
                   <p className="text-lg font-semibold">{SITE_CONFIG.name}</p>
                   <p className="text-xs uppercase tracking-[0.24em] text-slate-400">{siteContent.footer.tagline}</p>
@@ -139,34 +143,104 @@ export function Footer() {
   }
 
   if (recipe.footer === 'editorial-footer') {
+    const popularReadHeadlines = [
+      { href: '/articles', label: 'The quiet comeback of long-form' },
+      { href: '/articles', label: 'Sustainable work in 2026' },
+      { href: '/articles', label: 'Notes on local journalism' },
+      { href: '/help', label: 'How we edit & fact-check' },
+    ]
+    const forAuthors = [
+      { name: 'Submit a pitch', href: '/submit-pitch' },
+      { name: 'Author guidelines', href: '/author-guidelines' },
+      { name: 'Editorial support', href: '/editorial-support' },
+    ]
+    const quick = [
+      { name: 'Privacy policy', href: '/privacy' },
+      { name: 'Terms of service', href: '/terms' },
+      { name: 'Contact us', href: '/contact' },
+      { name: 'Author login', href: '/login' },
+    ]
     return (
-      <footer className="border-t border-[#dbc6b6] bg-[linear-gradient(180deg,#fff9f0_0%,#fff1df_100%)] text-[#2f1d16]">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr_0.9fr]">
+      <footer className="bg-[#1a1a1a] text-zinc-100">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#dbc6b6] bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#72594a]">
-                <Sparkles className="h-3.5 w-3.5" />
-                Editorial desk
-              </div>
-              <h3 className="mt-5 text-3xl font-semibold tracking-[-0.04em]">{SITE_CONFIG.name}</h3>
-              <p className="mt-4 max-w-md text-sm leading-7 text-[#72594a]">{SITE_CONFIG.description}</p>
-            </div>
-            <div>
-              <h4 className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8b6d5a]">Sections</h4>
-              <ul className="mt-4 space-y-3 text-sm">
-                {footerLinks.platform.map((item: any) => (
-                  <li key={item.name}><Link href={item.href} className="hover:text-[#2f1d16]">{item.name}</Link></li>
+              <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Popular topics</h3>
+              <ul className="mt-4 space-y-2.5 text-sm text-zinc-200">
+                {popularReadHeadlines.map((row) => (
+                  <li key={row.label}>
+                    <Link href={row.href} className="hover:text-white">
+                      {row.label}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>
             <div>
-              <h4 className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8b6d5a]">Company</h4>
-              <ul className="mt-4 space-y-3 text-sm">
-                {footerLinks.company.map((item) => (
-                  <li key={item.name}><Link href={item.href} className="hover:text-[#2f1d16]">{item.name}</Link></li>
+              <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">For authors</h3>
+              <ul className="mt-4 space-y-2.5 text-sm text-zinc-200">
+                {forAuthors.map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="hover:text-white">
+                      {item.name}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Quick links</h3>
+              <ul className="mt-4 space-y-2.5 text-sm text-zinc-200">
+                {quick.map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="hover:text-white">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Browse</h3>
+              <ul className="mt-4 space-y-2.5 text-sm text-zinc-200">
+                {footerLinks.platform.length ? (
+                  footerLinks.platform.map((item: { name: string; href: string }) => (
+                    <li key={item.name}>
+                      <Link href={item.href} className="hover:text-white">
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))
+                ) : (
+                  <li>
+                    <Link href="/articles" className="hover:text-white">Articles</Link>
+                  </li>
+                )}
+              </ul>
+            </div>
+          </div>
+          <div className="mt-12 flex flex-col items-center justify-between gap-6 border-t border-white/10 pt-8 sm:flex-row">
+            <Link href="/" className="flex items-center gap-2.5 text-lg font-semibold text-white">
+              <img
+                src="/favicon.png?v=20260424"
+                alt={`${SITE_CONFIG.name} logo`}
+                width={36}
+                height={36}
+                className="h-9 w-9 object-contain"
+              />
+              {SITE_CONFIG.name}
+            </Link>
+            <div className="flex items-center gap-2">
+              <a href="https://www.facebook.com" target="_blank" rel="noreferrer" className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-zinc-200 hover:bg-white/10" aria-label="Facebook">
+                <Facebook className="h-4 w-4" />
+              </a>
+              <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-zinc-200 hover:bg-white/10" aria-label="LinkedIn">
+                <Linkedin className="h-4 w-4" />
+              </a>
+            </div>
+            <p className="text-center text-xs text-zinc-500 sm:text-right">
+              &copy; {new Date().getFullYear()} {SITE_CONFIG.name}. {siteContent.footer.tagline} All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
@@ -179,9 +253,13 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr_0.8fr]">
           <div>
             <Link href="/" className="flex items-center gap-3">
-              <div className="h-11 w-11 overflow-hidden rounded-2xl border border-slate-200 bg-white p-1 shadow-sm">
-                <img src="/favicon.png?v=20260401" alt={`${SITE_CONFIG.name} logo`} width="44" height="44" className="h-full w-full object-contain" />
-              </div>
+              <img
+                src="/favicon.png?v=20260424"
+                alt={`${SITE_CONFIG.name} logo`}
+                width={44}
+                height={44}
+                className="h-11 w-11 object-contain"
+              />
               <div>
                 <span className="block text-lg font-semibold">{SITE_CONFIG.name}</span>
                 <span className="text-xs uppercase tracking-[0.22em] text-slate-500">{siteContent.footer.tagline}</span>
