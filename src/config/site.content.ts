@@ -2,25 +2,25 @@ import type { TaskKey } from '@/lib/site-config'
 
 export const siteContent = {
   navbar: {
-    tagline: 'Independent reading platform',
+    tagline: 'Your daily source for thoughtful articles',
   },
   footer: {
-    tagline: 'Stories, resources, and discoverable posts',
+    tagline: 'An article-led reading platform for ideas and long-form work.',
   },
   hero: {
-    badge: 'Latest stories and visuals',
-    title: ['A thoughtful home for', 'stories, visuals, and discovery.'],
+    badge: 'Latest stories and insights',
+    title: ['A thoughtful home for', 'reading, learning, and discovery.'],
     description:
-      'Explore fresh articles, image-led posts, and discoverable content across the platform through a calmer and clearer browsing experience.',
+      'Explore in-depth articles, ideas, and reporting in one calm, readable experience focused on the writing first.',
     primaryCta: {
       label: 'Read latest stories',
       href: '/articles',
     },
     secondaryCta: {
-      label: 'Explore visuals',
-      href: '/images',
+      label: 'Write with us',
+      href: '/contact',
     },
-    searchPlaceholder: 'Search stories, visuals, listings, and more',
+    searchPlaceholder: 'Search articles, topics, and tags',
     focusLabel: 'Focus',
     featureCardBadge: 'latest cover rotation',
     featureCardTitle: 'Latest posts shape the visual identity of the homepage.',
@@ -29,42 +29,49 @@ export const siteContent = {
   },
   home: {
     metadata: {
-      title: 'Stories, visuals, and discoverable content',
+      title: 'Read, learn, and discover — articles and ideas',
       description:
-        'Explore articles, images, listings, and curated posts through a cleaner reading-first experience.',
-      openGraphTitle: 'Stories, visuals, and discoverable content',
+        'Explore in-depth articles, author voices, and timely topics on an article-first reading platform.',
+      openGraphTitle: 'Read, learn, and discover — articles and ideas',
       openGraphDescription:
-        'Discover articles, visual posts, and connected content through a calmer reading-first experience.',
-      keywords: ['story platform', 'article site', 'visual content', 'content discovery'],
+        'Browse thoughtful writing, long-form features, and timely commentary in one place.',
+      keywords: [
+        'articles',
+        'publishing',
+        'long-form',
+        'insights',
+        'opinion',
+        'journalism',
+        'essays',
+      ],
     },
     introBadge: 'About the platform',
-    introTitle: 'Built for reading, browsing, and connecting different kinds of content.',
+    introTitle: 'Built for readers, writers, and in-depth ideas.',
     introParagraphs: [
-      'This site brings together article-style reading, visual browsing, and structured discovery so visitors can move naturally between different content types.',
-      'Instead of separating stories, visuals, and supporting resources into disconnected surfaces, the platform keeps them connected in one place with consistent navigation and easier exploration.',
-      'Whether someone starts with a story, an image-led post, a listing, or a resource page, they can keep discovering related content without friction.',
+      'The homepage puts articles first, with a clear path from discovery to the full read.',
+      'We highlight categories, search, and recent community activity so the experience stays focused on writing.',
+      'Whether you start with a topic, a search, or a lead story, you can move into longer reads without detours.',
     ],
     sideBadge: 'At a glance',
     sidePoints: [
-      'Reading-first homepage with stronger emphasis on stories and imagery.',
-      'Connected sections for articles, visuals, listings, and supporting resources.',
-      'Cleaner browsing rhythm designed to make exploration feel easier.',
-      'Lightweight interactions that keep the experience fast and readable.',
+      'Reading-first layout with a bold hero, search, and clear categories.',
+      'Recent activity to surface conversation around stories authors care about.',
+      'Simple navigation: articles, publish, and account without unrelated modules.',
     ],
     primaryLink: {
       label: 'Browse articles',
       href: '/articles',
     },
     secondaryLink: {
-      label: 'See visuals',
-      href: '/images',
+      label: 'Publish your story',
+      href: '/dashboard/articles/new',
     },
   },
   cta: {
     badge: 'Start exploring',
-    title: 'Explore articles, visuals, and resources through one connected experience.',
+    title: 'Dive into articles, ideas, and the voices that shape the conversation.',
     description:
-      'Move between articles, image-led posts, listings, and resources through one clearer and more connected visual system.',
+      'From explainers to essays, the platform is organized around the read — clear typography, easy search, and a steady publishing rhythm.',
     primaryCta: {
       label: 'Get Started Free',
       href: '/register',
@@ -130,13 +137,13 @@ export const taskIntroCopy: Record<
     title: 'Articles, stories, and long-form reading',
     paragraphs: [
       'This section is built for stories, explainers, guides, and long-form reading across topics and interests.',
-      'Articles connect with listings, images, resources, and other content types so deeper reading can lead naturally into related discovery.',
-      'Use this section to browse thoughtful posts, revisit useful writing, and move into supporting content when you want more context.',
+      'Use the archive to find timely reporting, features, and essays without switching between unrelated product areas.',
+      'Start from categories or search, then read with calm typography and clear structure.',
     ],
     links: [
-      { label: 'Explore listings', href: '/listings' },
-      { label: 'Open images', href: '/images' },
-      { label: 'Browse resources', href: '/pdf' },
+      { label: 'About us', href: '/about' },
+      { label: 'Contact the desk', href: '/contact' },
+      { label: 'Help & guidelines', href: '/help' },
     ],
   },
   classified: {
