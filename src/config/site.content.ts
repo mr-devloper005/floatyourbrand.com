@@ -2,7 +2,7 @@ import type { TaskKey } from '@/lib/site-config'
 
 export const siteContent = {
   navbar: {
-    tagline: 'Your daily source for thoughtful articles',
+    tagline: 'Thoughtful articles',
   },
   footer: {
     tagline: 'An article-led reading platform for ideas and long-form work.',

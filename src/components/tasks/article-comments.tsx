@@ -157,12 +157,7 @@ export function ArticleComments({ slug }: { slug: string }) {
 
   const remainingToday = Math.max(DAILY_COMMENT_LIMIT - commentsToday, 0);
   const limitReached = remainingToday <= 0;
-  const resetLabel = nextResetTime().toLocaleString("en-IN", {
-    day: "numeric",
-    month: "short",
-    hour: "numeric",
-    minute: "2-digit",
-  });
+  const resetLabel = "next day";
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -310,9 +305,6 @@ export function ArticleComments({ slug }: { slug: string }) {
                     <p className="text-sm font-semibold text-foreground">{comment.authorName}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <p className="text-xs text-muted-foreground">
-                      {new Date(comment.createdAt).toLocaleDateString()}
-                    </p>
                     {comment.source === "local" ? (
                       <button
                         type="button"

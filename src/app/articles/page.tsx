@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Clock, Search as SearchIcon } from "lucide-react";
+import { ArrowRight, Search as SearchIcon } from "lucide-react";
 import { EditorialPage, SectionCard } from "@/components/shared/editorial-page";
 import { buildTaskMetadata } from "@/lib/seo";
 import { taskPageMetadata } from "@/config/site.content";
@@ -79,7 +79,7 @@ export default async function ArticlesPage({
   const params = (await searchParams) || {};
   const activeCategory = (params.category || "").toLowerCase();
   const posts = await fetchTaskPosts("article", 24, {
-    allowMockFallback: true,
+    allowMockFallback: false,
     fresh: true,
   });
 
@@ -181,12 +181,6 @@ export default async function ArticlesPage({
                   <span className="font-semibold uppercase tracking-wider text-[#ff5500]">
                     {getCategory(lead)}
                   </span>
-                  {lead.publishedAt ? (
-                    <span className="inline-flex items-center gap-1 text-zinc-500">
-                      <Clock className="h-3.5 w-3.5" />
-                      {formatDate(lead.publishedAt)}
-                    </span>
-                  ) : null}
                 </div>
                 <h2 className="text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl">
                   {lead.title}
@@ -236,7 +230,6 @@ export default async function ArticlesPage({
                   ) : null}
                   <div className="mt-auto flex items-center justify-between text-xs text-zinc-500">
                     <span>{p.authorName || "Editorial team"}</span>
-                    <span>{formatDate(p.publishedAt)}</span>
                   </div>
                 </div>
               </Link>
