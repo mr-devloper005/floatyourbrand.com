@@ -353,8 +353,6 @@ export function HotfrogArticleHome({ initialPosts }: Props) {
                     >
                       &ldquo;{a.title}&rdquo;
                     </Link>
-                    <br />
-                    <span className="text-xs text-zinc-400">{a.time}</span>
                   </p>
                 ))}
               </div>

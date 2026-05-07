@@ -1,12 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import {
-  ArrowRight,
-  Clock,
-  Search as SearchIcon,
-  SlidersHorizontal,
-  X,
-} from "lucide-react";
+import { ArrowRight, Search as SearchIcon, SlidersHorizontal, X } from "lucide-react";
 import {
   EditorialPage,
   SectionCard,
@@ -413,12 +407,6 @@ export default async function SearchPage({
                           <span className="rounded-sm bg-[#ff5500]/10 px-2 py-0.5 font-bold uppercase tracking-wider text-[#ff5500]">
                             {getCategory(post)}
                           </span>
-                          {post.publishedAt ? (
-                            <span className="inline-flex items-center gap-1 text-zinc-500">
-                              <Clock className="h-3 w-3" />
-                              {formatDate(post.publishedAt)}
-                            </span>
-                          ) : null}
                           {post.authorName ? (
                             <span className="text-zinc-500">
                               · {post.authorName}
