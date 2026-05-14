@@ -1,56 +1,85 @@
-import { Mail, MessageSquareText, ShieldCheck } from 'lucide-react';
+import {
+  EditorialPage,
+  PrimaryButton,
+  SectionCard,
+} from "@/components/shared/editorial-page";
+import { SITE_CONFIG } from "@/lib/site-config";
+import { Mail, MessageSquare, Send, Clock, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { ContactLeadForm } from "@/components/shared/contact-lead-form";
 
-import { ContactLeadForm } from '@/components/shared/contact-lead-form';
-import { Footer } from '@/components/shared/footer';
-import { NavbarShell } from '@/components/shared/navbar-shell';
-
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'Floatyourbrand';
-
-const contactHighlights = [
-  { icon: Mail, title: 'Direct response', copy: 'Your message is saved securely and routed to the right team.' },
-  { icon: MessageSquareText, title: 'Clear details', copy: 'Share your requirement, question, or collaboration idea in one place.' },
-  { icon: ShieldCheck, title: 'Reliable follow-up', copy: 'We keep the request record so every conversation stays traceable.' },
-];
+const lanes = [
+  {
+    icon: Send,
+    title: "Submit a story or pitch",
+    body: "Have an idea for an article, an essay, or a feature? Send a tight summary and we will reply with next steps.",
+    href: "/submit-pitch",
+    cta: "Open the pitch form",
+  },
+  {
+    icon: MessageSquare,
+    title: "Editorial questions",
+    body: "Working on a draft, need feedback on tone, or unsure where your piece fits? The editorial desk can help.",
+    href: "/editorial-support",
+    cta: "Editorial support",
+  },
+  {
+    icon: Mail,
+    title: "General inquiries",
+    body: "Press, partnerships, corrections, or anything that does not fit the other lanes. We read every message.",
+    href: "mailto:hello@floatyourbrand.com",
+    cta: "Email the team",
+  },
+] as const;
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-[#f7f1e8] text-stone-950">
-      <NavbarShell />
-      <main>
-        <section className="relative overflow-hidden px-6 py-20 md:px-10 lg:px-16">
-          <div className="absolute left-[-10%] top-10 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" />
-          <div className="absolute bottom-0 right-[-8%] h-80 w-80 rounded-full bg-stone-300/50 blur-3xl" />
-
-          <div className="relative mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <div>
-              <p className="text-sm font-black uppercase tracking-[0.35em] text-stone-500">Contact</p>
-              <h1 className="mt-5 max-w-3xl text-5xl font-black leading-[0.95] tracking-[-0.06em] text-stone-950 md:text-7xl">
-                Let&apos;s talk about your next move.
-              </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-700">
-                Use this form to reach {siteName}. Your request will be recorded and shared with the support team for follow-up.
-              </p>
-
-              <div className="mt-8 grid gap-4">
-                {contactHighlights.map((item) => (
-                  <div key={item.title} className="flex gap-4 rounded-3xl border border-stone-200 bg-white/60 p-5 shadow-sm">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-stone-950 text-white">
-                      <item.icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h2 className="text-base font-black text-stone-950">{item.title}</h2>
-                      <p className="mt-1 text-sm leading-6 text-stone-600">{item.copy}</p>
-                    </div>
-                  </div>
-                ))}
+    <EditorialPage
+      eyebrow="Get in touch"
+      title="Talk to the editorial desk."
+      description={`Reach the people behind ${SITE_CONFIG.name}. Choose a lane below or send a note directly — we read everything.`}
+      crumbs={[{ label: "Home", href: "/" }, { label: "Contact us" }]}
+    >
+      <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="space-y-5">
+          {lanes.map((lane) => (
+            <div
+              key={lane.title}
+              className="rounded-md border border-zinc-200 bg-white p-6 transition hover:border-zinc-300"
+            >
+              <div className="flex items-start gap-4">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm bg-[#ff5500]/10 text-[#ff5500]">
+                  <lane.icon className="h-5 w-5" />
+                </span>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-zinc-900">
+                    {lane.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-7 text-zinc-600">
+                    {lane.body}
+                  </p>
+                  <Link
+                    href={lane.href}
+                    className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:underline"
+                  >
+                    {lane.cta}
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
               </div>
             </div>
+          ))}
 
-            <ContactLeadForm />
+          <div className="flex items-center gap-3 rounded-md bg-zinc-50 p-5 text-sm text-zinc-600">
+            <Clock className="h-4 w-4 text-zinc-500" />
+            We typically reply within 2&ndash;3 business days.
           </div>
-        </section>
-      </main>
-      <Footer />
-    </div>
+        </div>
+
+        <SectionCard title="Send a quick message">
+          <ContactLeadForm />
+        </SectionCard>
+      </div>
+    </EditorialPage>
   );
 }
