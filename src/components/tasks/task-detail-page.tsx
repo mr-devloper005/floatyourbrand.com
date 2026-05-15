@@ -353,12 +353,9 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
                   {content.email && (
                     <div className="flex items-start gap-2">
                       <Mail className="mt-0.5 h-4 w-4" />
-                      <a
-                        href={`mailto:${content.email}`}
-                        className="break-all text-foreground hover:underline"
-                      >
+                      <span className="break-all text-foreground">
                         {content.email}
-                      </a>
+                      </span>
                     </div>
                   )}
                   {location && (
@@ -425,12 +422,9 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
                   {content.email && (
                     <div className="flex items-start gap-2">
                       <Mail className="mt-0.5 h-4 w-4" />
-                      <a
-                        href={`mailto:${content.email}`}
-                        className="break-all text-foreground hover:underline"
-                      >
+                      <span className="break-all text-foreground">
                         {content.email}
-                      </a>
+                      </span>
                     </div>
                   )}
                   {location && (

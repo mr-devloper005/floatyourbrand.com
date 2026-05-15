@@ -159,7 +159,15 @@ export function Navbar() {
             ) : null}
 
             {isAuthenticated ? (
-              <NavbarAuthControls />
+              <div className="hidden items-center gap-2 md:flex">
+                <Button size="sm" asChild className={cn('rounded-full', palette.cta)}>
+                  <Link href="/create/article">
+                    <Plus className="mr-1 h-4 w-4" />
+                    Create Article
+                  </Link>
+                </Button>
+                <NavbarAuthControls />
+              </div>
             ) : (
               <div className="hidden items-center gap-2 md:flex">
                 <Button variant="ghost" size="sm" asChild className="rounded-full px-4">
@@ -183,6 +191,12 @@ export function Navbar() {
         {isMobileMenuOpen && (
           <div className={palette.mobile}>
             <div className="space-y-2 px-4 py-4">
+              {isAuthenticated ? (
+                <Link href="/create/article" onClick={() => setIsMobileMenuOpen(false)} className={cn('mb-3 flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold', palette.cta)}>
+                  <Plus className="h-5 w-5" />
+                  Create Article
+                </Link>
+              ) : null}
               <div className={cn('mb-3 flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium', palette.search)}>
                 <Search className="h-4 w-4" />
                 Find businesses, spaces, and services
@@ -303,7 +317,15 @@ export function Navbar() {
           ) : null}
 
           {isAuthenticated ? (
-            <NavbarAuthControls />
+            <div className="hidden items-center gap-2 md:flex">
+              <Button size="sm" asChild className={style.cta}>
+                <Link href="/create/article">
+                  <Plus className="mr-1 h-4 w-4" />
+                  Create Article
+                </Link>
+              </Button>
+              <NavbarAuthControls />
+            </div>
           ) : (
             <div className="hidden items-center gap-2 md:flex">
               <Button variant="ghost" size="sm" asChild className="rounded-full border border-transparent px-4 text-white hover:bg-white/10">
@@ -339,6 +361,12 @@ export function Navbar() {
       {isMobileMenuOpen && (
         <div className={style.mobile}>
           <div className="space-y-2 px-4 py-4">
+            {isAuthenticated ? (
+              <Link href="/create/article" onClick={() => setIsMobileMenuOpen(false)} className={cn('mb-3 flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold', style.cta)}>
+                <Plus className="h-5 w-5" />
+                Create Article
+              </Link>
+            ) : null}
             <Link href="/search" onClick={() => setIsMobileMenuOpen(false)} className="mb-3 flex items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3 text-sm font-semibold text-muted-foreground">
               <Search className="h-4 w-4" />
               Search the site

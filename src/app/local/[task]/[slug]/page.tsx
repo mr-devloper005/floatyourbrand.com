@@ -223,14 +223,9 @@ export default function LocalPostDetailPage() {
                   {content.email ? (
                     <div className="flex items-start gap-2">
                       <Mail className="mt-0.5 h-4 w-4" />
-                      <a
-                        href={`mailto:${content.email}`}
-                        className="break-all text-foreground hover:underline"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
+                      <span className="break-all text-foreground">
                         {content.email}
-                      </a>
+                      </span>
                     </div>
                   ) : null}
                   {location ? (
