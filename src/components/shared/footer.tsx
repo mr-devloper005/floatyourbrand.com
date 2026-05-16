@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FileText, Building2, LayoutGrid, Tag, Github, Twitter, Linkedin, Facebook, Image as ImageIcon, User, ArrowRight, Sparkles } from 'lucide-react'
+import { FileText, Building2, LayoutGrid, Tag, Image as ImageIcon, User, ArrowRight } from 'lucide-react'
 import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
 import { siteContent } from '@/config/site.content'
 import { getFactoryState } from '@/design/factory/get-factory-state'
@@ -46,9 +46,9 @@ const footerLinks = {
 }
 
 const socialLinks = [
-  { name: 'Twitter', href: 'https://twitter.com', icon: Twitter },
-  { name: 'GitHub', href: 'https://github.com', icon: Github },
-  { name: 'LinkedIn', href: 'https://linkedin.com', icon: Linkedin },
+  // { name: 'Twitter', href: 'https://twitter.com', icon: Twitter },
+  // { name: 'GitHub', href: 'https://github.com', icon: Github },
+  // { name: 'LinkedIn', href: 'https://linkedin.com', icon: Linkedin },
 ]
 
 export function Footer() {
@@ -149,21 +149,15 @@ export function Footer() {
       { href: '/articles', label: 'Notes on local journalism' },
       { href: '/help', label: 'How we edit & fact-check' },
     ]
-    const forAuthors = [
-      { name: 'Submit a pitch', href: '/submit-pitch' },
-      { name: 'Author guidelines', href: '/author-guidelines' },
-      { name: 'Editorial support', href: '/editorial-support' },
-    ]
     const quick = [
       { name: 'Privacy policy', href: '/privacy' },
       { name: 'Terms of service', href: '/terms' },
       { name: 'Contact us', href: '/contact' },
-      { name: 'Author login', href: '/login' },
     ]
     return (
       <footer className="bg-[#1a1a1a] text-zinc-100">
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             <div>
               <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Popular topics</h3>
               <ul className="mt-4 space-y-2.5 text-sm text-zinc-200">
@@ -171,18 +165,6 @@ export function Footer() {
                   <li key={row.label}>
                     <Link href={row.href} className="hover:text-white">
                       {row.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">For authors</h3>
-              <ul className="mt-4 space-y-2.5 text-sm text-zinc-200">
-                {forAuthors.map((item) => (
-                  <li key={item.name}>
-                    <Link href={item.href} className="hover:text-white">
-                      {item.name}
                     </Link>
                   </li>
                 ))}
@@ -230,14 +212,6 @@ export function Footer() {
               />
               {SITE_CONFIG.name}
             </Link>
-            <div className="flex items-center gap-2">
-              <a href="https://www.facebook.com" target="_blank" rel="noreferrer" className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-zinc-200 hover:bg-white/10" aria-label="Facebook">
-                <Facebook className="h-4 w-4" />
-              </a>
-              <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-zinc-200 hover:bg-white/10" aria-label="LinkedIn">
-                <Linkedin className="h-4 w-4" />
-              </a>
-            </div>
             <p className="text-center text-xs text-zinc-500 sm:text-right">
               &copy; {new Date().getFullYear()} {SITE_CONFIG.name}. {siteContent.footer.tagline} All rights reserved.
             </p>
