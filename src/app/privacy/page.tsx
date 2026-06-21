@@ -1,9 +1,10 @@
-﻿import {
+import {
   EditorialPage,
   SectionCard,
 } from "@/components/shared/editorial-page";
 import { SITE_CONFIG } from "@/lib/site-config";
-import { Shield, Database, UserCog, Cookie, Mail } from "lucide-react";
+import { Shield, Database, UserCog, Cookie } from "lucide-react";
+import Link from "next/link";
 
 const sections = [
   {
@@ -53,7 +54,7 @@ export default function PrivacyPage() {
     <EditorialPage
       eyebrow="Legal"
       title="Privacy policy."
-      description={`How ${SITE_CONFIG.name} collects, uses, and protects your information — written in plain language.`}
+      description={`How ${SITE_CONFIG.name} collects, uses, and protects your information - written in plain language.`}
       crumbs={[{ label: "Home", href: "/" }, { label: "Privacy policy" }]}
     >
       <div className="grid gap-6 lg:grid-cols-[0.32fr_0.68fr]">
@@ -114,13 +115,12 @@ export default function PrivacyPage() {
                 Have a privacy question or request? Reach the editorial team and
                 we will respond as soon as we can.
               </p>
-              <a
-                href="mailto:privacy@floatyourbrand.com"
+              <Link
+                href="/contact"
                 className="inline-flex items-center gap-2 rounded-sm bg-zinc-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-zinc-800"
               >
-                <Mail className="h-4 w-4" />
-                privacy@floatyourbrand.com
-              </a>
+                Contact the team
+              </Link>
             </div>
           </SectionCard>
         </div>
@@ -128,3 +128,4 @@ export default function PrivacyPage() {
     </EditorialPage>
   );
 }
+

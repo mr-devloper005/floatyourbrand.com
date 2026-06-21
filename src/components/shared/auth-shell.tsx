@@ -135,34 +135,9 @@ export function AuthShell({
 
           <div className="mt-6">{children}</div>
 
-          <div className="mt-8 flex items-center gap-3">
-            <span className="h-px flex-1 bg-zinc-200" />
-            <span className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">
-              or continue with
-            </span>
-            <span className="h-px flex-1 bg-zinc-200" />
-          </div>
+        
 
-          <div className="mt-5 grid gap-2.5 sm:grid-cols-2">
-            <button
-              type="button"
-              disabled
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-sm border border-zinc-300 bg-white text-sm font-semibold text-zinc-700 hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-60"
-              title="Coming soon"
-            >
-              <GoogleMark />
-              Google
-            </button>
-            <button
-              type="button"
-              disabled
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-sm border border-zinc-300 bg-white text-sm font-semibold text-zinc-700 hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-60"
-              title="Coming soon"
-            >
-              <GithubMark />
-              GitHub
-            </button>
-          </div>
+         
 
           <p className="mt-6 flex items-center gap-2 text-xs text-zinc-500">
             <ShieldCheck className="h-3.5 w-3.5 text-[#28a745]" />
@@ -200,20 +175,3 @@ function GoogleMark() {
   );
 }
 
-function GithubMark() {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      className="shrink-0"
-    >
-      <path
-        fill="#1f2328"
-        fillRule="evenodd"
-        d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55v-2.05c-3.2.7-3.87-1.36-3.87-1.36-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.34.95.1-.74.4-1.24.72-1.53-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.18-3.1-.12-.3-.51-1.47.11-3.07 0 0 .96-.31 3.16 1.18.92-.26 1.9-.39 2.88-.39.98 0 1.96.13 2.88.39 2.2-1.49 3.16-1.18 3.16-1.18.62 1.6.23 2.77.11 3.07.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14v3.18c0 .31.21.66.79.55C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"
-      />
-    </svg>
-  );
-}

@@ -8,7 +8,6 @@ import {
   BookOpen,
   Compass,
   Lightbulb,
-  Mail,
   MessageSquare,
   Search as SearchIcon,
   ShieldCheck,
@@ -148,18 +147,12 @@ export default function HelpPage() {
                   Still need a hand?
                 </h3>
                 <p className="mt-1 text-sm text-zinc-600">
-                  Email the team and we will reply within a couple of business
+                  Send a request and we will reply within a couple of business
                   days.
                 </p>
               </div>
             </div>
-            <a
-              href="mailto:hello@floatyourbrand.com"
-              className="inline-flex items-center gap-2 rounded-sm border border-zinc-300 px-4 py-2.5 text-sm font-semibold text-zinc-900 hover:bg-zinc-50"
-            >
-              <Mail className="h-4 w-4" />
-              hello@floatyourbrand.com
-            </a>
+            <PrimaryButton href="/contact">Contact support</PrimaryButton>
           </div>
         </SectionCard>
       </div>
