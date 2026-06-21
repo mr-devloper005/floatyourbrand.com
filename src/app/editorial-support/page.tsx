@@ -9,7 +9,6 @@ import {
   Edit3,
   HelpCircle,
   LifeBuoy,
-  Mail,
   MessageSquare,
 } from "lucide-react";
 import Link from "next/link";
@@ -153,19 +152,12 @@ export default function EditorialSupportPage() {
                   Reach the editorial desk
                 </h3>
                 <p className="mt-1 text-sm text-zinc-600">
-                  Prefer email? Write to us directly and we will route your
-                  request to the right editor.
+                  Send your request through the contact page and we will route
+                  it to the right editor.
                 </p>
               </div>
             </div>
             <div className="flex flex-wrap gap-3">
-              <a
-                href="mailto:editors@floatyourbrand.com"
-                className="inline-flex items-center gap-2 rounded-sm border border-zinc-300 px-4 py-2.5 text-sm font-semibold text-zinc-900 hover:bg-zinc-50"
-              >
-                <Mail className="h-4 w-4" />
-                editors@floatyourbrand.com
-              </a>
               <PrimaryButton href="/contact">
                 <MessageSquare className="h-4 w-4" />
                 Message the team

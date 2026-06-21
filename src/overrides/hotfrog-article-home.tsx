@@ -184,6 +184,14 @@ export function HotfrogArticleHome({ initialPosts }: Props) {
                   <span className="hidden max-w-[180px] truncate text-sm text-white/90 sm:inline">
                     Hi, {user.name}
                   </span>
+                  <Link
+                    href="/create/article"
+                    className="inline-flex items-center gap-1.5 rounded-sm border border-white/20 px-2.5 py-1.5 text-sm font-medium text-white hover:bg-white/10"
+                  >
+                    <Plus className="h-4 w-4" />
+                    <span className="hidden sm:inline">Create Article</span>
+                    <span className="sm:hidden">Create</span>
+                  </Link>
                   <button
                     type="button"
                     onClick={logout}
@@ -243,20 +251,20 @@ export function HotfrogArticleHome({ initialPosts }: Props) {
             <input type="hidden" name="task" value="article" />
             <input type="hidden" name="master" value="1" />
             <div className="flex w-full flex-col overflow-hidden rounded-sm bg-white shadow-2xl ring-1 ring-white/20 sm:flex-row sm:items-stretch">
-              <label className="flex flex-1 items-center gap-2 border-b border-zinc-200 px-3 py-3 sm:border-b-0 sm:py-0 sm:pl-4">
-                <Search className="h-4 w-4 shrink-0 text-zinc-400" />
+              <label className="flex flex-1 items-center gap-2 border-b border-zinc-200 px-4 py-4 sm:border-b-0 sm:py-0 sm:pl-5">
+                <Search className="h-5 w-5 shrink-0 text-zinc-400" />
                 <input
                   name="q"
-                  className="min-w-0 flex-1 bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400"
+                  className="min-w-0 flex-1 bg-transparent text-base text-zinc-800 outline-none placeholder:text-zinc-400"
                   placeholder="Search titles or keywords"
                   autoComplete="off"
                 />
               </label>
-              <label className="flex flex-1 items-center gap-2 border-b border-zinc-200 px-3 py-3 sm:border-b-0 sm:border-l sm:border-t-0 sm:py-0 sm:pl-3">
-                <MapPin className="h-4 w-4 shrink-0 text-zinc-400" />
+              <label className="flex flex-1 items-center gap-2 border-b border-zinc-200 px-4 py-4 sm:border-b-0 sm:border-l sm:border-t-0 sm:py-0 sm:pl-4">
+                <MapPin className="h-5 w-5 shrink-0 text-zinc-400" />
                 <input
                   name="category"
-                  className="min-w-0 flex-1 bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400"
+                  className="min-w-0 flex-1 bg-transparent text-base text-zinc-800 outline-none placeholder:text-zinc-400"
                   placeholder="Filter by category"
                   list="home-cat-hints"
                   autoComplete="off"
@@ -269,7 +277,7 @@ export function HotfrogArticleHome({ initialPosts }: Props) {
               </label>
               <button
                 type="submit"
-                className="shrink-0 bg-[#ff5500] px-8 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-[#e64d00] sm:py-0"
+                className="shrink-0 bg-[#ff5500] px-10 py-4 text-base font-bold uppercase tracking-wide text-white transition hover:bg-[#e64d00] sm:py-0"
               >
                 Find
               </button>
